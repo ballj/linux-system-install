@@ -1,0 +1,6 @@
+#add user ballj
+passwd
+useradd -m -g wheel ballj
+passwd ballj
+echo '%wheel ALL=(ALL) ALL' > /etc/sudoers.d/wheel
+sudo localectl --no-convert set-x11-keymap gb "" "" caps:none

@@ -1,0 +1,4 @@
+systemctl enable --now org.cups.cupsd.service
+systemctl enable --now avahi-daemon.service
+
+#edit nss switch file

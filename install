@@ -1,0 +1,112 @@
+sed -i 's/#NTP=/NTP=pool.ntp.org/' /etc/systemd/timesyncd.conf
+timedatectl set-ntp true
+(
+echo g
+echo n
+echo 1
+echo
+echo +550M
+echo Y
+echo t
+echo 1
+echo n
+echo 2
+echo 
+echo 
+echo Y
+echo
+echo w
+) | fdisk /dev/sda
+mkfs.vfat /dev/sda1
+
+cryptsetup luksFormat --type luks2 /dev/sda2
+cryptsetup open /dev/sda2 sda2_crypt
+pvcreate /dev/mapper/sda2_crypt
+vgcreate vg_arch /dev/mapper/sda2_crypt
+lvcreate -L 48G vg_arch -n lv_root
+lvcreate -L 16G vg_arch -n lv_swap
+lvcreate -l 100%FREE vg_arch -n lv_home
+
+mkfs.ext4 /dev/mapper/vg_arch-lv_root
+mkfs.ext4 /dev/mapper/vg_arch-lv_home
+mkswap /dev/mapper/vg_arch-lv_swap
+
+mount /dev/mapper/vg_arch-lv_root /mnt
+mkdir /mnt/home
+mount /dev/mapper/vg_arch-lv_home /mnt/home
+swapon /dev/mapper/vg_arch-lv_swap
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+
+pacstrap /mnt base base-devel
+genfstab -U /mnt >> /mnt/etc/fstab
+arch-chroot /mnt
+ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
+hwclock --systohc
+sed -i 's/#en_GB.UTF-8 UTF-8/en_GB.UTF-8 UTF-8/' /etc/locale.gen
+locale-gen
+echo 'LANG=en_GB.UTF-8' > /etc/locale.conf
+echo 'KEYMAP=uk' > /etc/vconsole.conf
+echo 'gblon01prdlap01' > /etc/hostname
+echo -e '127.0.0.1\tlocalhost' >> /etc/hosts
+echo -e "127.0.1.1\t$(cat /etc/hostname).internal.packetsolutions.io\t$(cat /etc/hostname)" >> /etc/hosts
+echo -e '::1\tlocalhost' >> /etc/hosts
+pacman -Sy
+pacman -S intel-ucode networkmanager
+systemctl enable NetworkManager
+systemctl enable systemd-resolved
+
+#edit /etc/mkinitcpio.conf
+#HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt lvm2 resume filesystems fsck)
+mkinitcpio -p linux
+
+--------------------------------------------------
+bootloader - grub
+--------------------------------------------------
+
+pacman -S grub efibootmgr
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+
+#edit /etc/default/grub
+#GRUB_PRELOAD_MODULES="... lvm"
+#GRUB_CMDLINE_LINUX="cryptdevice=UUID=device-UUID:cryptroot"
+
+grub-mkconfig -o /boot/grub/grub.cfg
+mkdir /boot/EFI/boot
+cp /boot/EFI/GRUB/grubx64.efi /boot/EFI/boot/bootx64.efi
+
+exit
+umount -R /mnt/
+
+--------------------------------------------------
+bootloader - systemd-boot
+--------------------------------------------------
+bootctl --path=/boot install
+
+vim /boot/loader/entries/arch.conf
+echo -e 'title\tArch Linux' > /boot/loader/entries/arch.conf
+echo -e 'linux\t/vmlinuz-linux' >> /boot/loader/entries/arch.conf
+if pacman -Qi intel-ucode 2>/dev/null 1>/dev/null; then
+  echo -e 'initrd\t/intel-ucode.img' >> /boot/loader/entries/arch.conf
+fi
+echo -e 'initrd\t/initramfs-linux.img' >> /boot/loader/entries/arch.conf
+echo -e "options\tcryptdevice=UUID=$(blkid | grep /dev/sda2 | grep -Po '(?<=sda2: UUID=.)[a-zA-Z0-9-]+'):sda2_crypt:allow-discards resume=/dev/mapper/vg_arch-lv_swap root=/dev/mapper/vg_arch-lv_root rw quiet" >> /boot/loader/entries/arch.conf
+
+#UUID=sda2
+```
+title	Arch Linux
+linux	/vmlinuz-linux
+initrd	/initramfs-linux.img
+options cryptdevice=UUID=<YOUR-PARTITION-UUID>:lvm:allow-discards resume=/dev/mapper/vg0-swap root=/dev/mapper/vg0-root rw quiet
+```
+
+echo 'timeout 0' > /boot/loader/loader.conf
+echo 'default arch' >> /boot/loader/loader.conf
+echo 'editor 0' >> /boot/loader/loader.conf
+
+vim /boot/loader/loader.conf
+```
+timeout 0
+default arch
+editor 0
+```

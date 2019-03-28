@@ -1,0 +1,7 @@
+sudo systemctl enable --now tlp.service
+sudo systemctl enable --now tlp-sleep.service
+sudo systemctl enable --now NetworkManager-dispatcher.service
+sudo systemctl stop systemd-rfkill.service
+sudo systemctl stop systemd-rfkill.socket
+sudo systemctl mask systemd-rfkill.socket
+sudo systemctl mask systemd-rfkill.service
