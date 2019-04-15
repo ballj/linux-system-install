@@ -23,6 +23,8 @@ xorg-xinput
 autorandr 
 arandr 
 compton
+dunst
+libnotify
 
 #i3blocks
 acpi 
@@ -44,6 +46,7 @@ xorg-xhost
 bind-tools 
 sshpass
 turbostat
+nextcloud-client
 
 #desktop packages
 libreoffice-fresh 
