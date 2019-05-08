@@ -24,6 +24,7 @@ autorandr
 arandr 
 compton
 dunst
+gnome-icon-theme
 libnotify
 
 #i3blocks
