@@ -52,6 +52,7 @@ nextcloud-client
 libreoffice-fresh 
 simple-scan
 evince
+gvfs
 chromium
 gnome-keyring
 libsecret
