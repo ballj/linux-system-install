@@ -1,2 +1,7 @@
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 nvim +PluginInstall +qall
+python -m venv ~/.local/share/nvim/venv
+. ~/.local/share/nvim/venv/bin/activate
+pip install --upgrade pip
+pip install -r ~/.config/nvim/requirements.txt
+deactivate
