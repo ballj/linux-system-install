@@ -6,6 +6,7 @@ xf86-video-intel
 i3-gaps 
 i3blocks 
 dmenu 
+rofi
 rxvt-unicode 
 xorg-server 
 xorg-xinit 
