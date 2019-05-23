@@ -10,3 +10,7 @@
 	path = aur/powerline-fonts-git
 	url = https://aur.archlinux.org/powerline-fonts-git.git
         ignore = dirty
+[submodule "aur/xcalib"]
+	path = aur/xcalib
+	url = https://aur.archlinux.org/xcalib.git
+        ignore = dirty
