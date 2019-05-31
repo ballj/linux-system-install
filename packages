@@ -64,6 +64,9 @@ w3m
 jq
 neovim
 whois
+nmap
+tcpdump
+wireshark-qt
 
 #network manager
 networkmanager-openvpn 
