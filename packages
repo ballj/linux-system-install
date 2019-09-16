@@ -16,6 +16,7 @@ ttf-freefont
 xdg-user-dirs
 ntfs-3g
 xorg-xbacklight
+i3lock-color
 
 #i3 dependancies
 xorg-xrandr 

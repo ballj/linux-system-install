@@ -2,10 +2,6 @@
 	path = aur/betterlockscreen
 	url = https://aur.archlinux.org/betterlockscreen.git
         ignore = dirty
-[submodule "aur/i3lock-color"]
-	path = aur/i3lock-color
-	url = https://aur.archlinux.org/i3lock-color.git
-        ignore = dirty
 [submodule "aur/powerline-fonts-git"]
 	path = aur/powerline-fonts-git
 	url = https://aur.archlinux.org/powerline-fonts-git.git
