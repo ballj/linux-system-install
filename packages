@@ -28,6 +28,7 @@ compton
 dunst
 gnome-icon-theme
 libnotify
+pacman-contrib
 
 #i3blocks
 acpi 
