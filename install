@@ -52,7 +52,12 @@ echo -e '127.0.0.1\tlocalhost' >> /etc/hosts
 echo -e "127.0.1.1\t$(cat /etc/hostname).internal.packetsolutions.io\t$(cat /etc/hostname)" >> /etc/hosts
 echo -e '::1\tlocalhost' >> /etc/hosts
 pacman -Sy
-pacman -S intel-ucode networkmanager
+if cat /proc/cpuinfo | grep -q 'model name.*Intel'; then
+  pacman -S intel-ucode networkmanager
+fi
+if cat /proc/cpuinfo | grep -q 'model name.*AMD'; then
+  pacman -S amd-ucode networkmanager
+fi
 systemctl enable NetworkManager
 systemctl enable systemd-resolved
 
@@ -88,6 +93,9 @@ echo -e 'title\tArch Linux' > /boot/loader/entries/arch.conf
 echo -e 'linux\t/vmlinuz-linux' >> /boot/loader/entries/arch.conf
 if pacman -Qi intel-ucode 2>/dev/null 1>/dev/null; then
   echo -e 'initrd\t/intel-ucode.img' >> /boot/loader/entries/arch.conf
+fi
+if pacman -Qi amd-ucode 2>/dev/null 1>/dev/null; then
+  echo -e 'initrd\t/amd-ucode.img' >> /boot/loader/entries/arch.conf
 fi
 echo -e 'initrd\t/initramfs-linux.img' >> /boot/loader/entries/arch.conf
 echo -e "options\tcryptdevice=UUID=$(blkid | grep /dev/sda2 | grep -Po '(?<=sda2: UUID=.)[a-zA-Z0-9-]+'):sda2_crypt:allow-discards resume=/dev/mapper/vg_arch-lv_swap root=/dev/mapper/vg_arch-lv_root rw quiet" >> /boot/loader/entries/arch.conf
