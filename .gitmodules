@@ -2,14 +2,19 @@
 	path = aur/betterlockscreen
 	url = https://aur.archlinux.org/betterlockscreen.git
         ignore = dirty
+	branch = master
 [submodule "aur/powerline-fonts-git"]
 	path = aur/powerline-fonts-git
 	url = https://aur.archlinux.org/powerline-fonts-git.git
         ignore = dirty
+	branch = master
 [submodule "aur/xcalib"]
 	path = aur/xcalib
 	url = https://aur.archlinux.org/xcalib.git
         ignore = dirty
+	branch = master
 [submodule "aur/g810-led-git"]
 	path = aur/g810-led-git
 	url = https://aur.archlinux.org/g810-led-git.git
+        ignore = dirty
+	branch = master
