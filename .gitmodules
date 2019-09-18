@@ -18,3 +18,8 @@
 	url = https://aur.archlinux.org/g810-led-git.git
         ignore = dirty
 	branch = master
+[submodule "aur/asus-wmi-sensors-dkms-git"]
+	path = aur/asus-wmi-sensors-dkms-git
+	url = https://aur.archlinux.org/packages/asus-wmi-sensors-dkms-git/
+	branch = master
+        ignore = dirty
