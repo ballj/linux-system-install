@@ -69,6 +69,7 @@ whois
 nmap
 tcpdump
 wireshark-qt
+tree
 
 #network manager
 networkmanager-openvpn 
