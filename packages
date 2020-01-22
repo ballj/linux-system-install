@@ -87,3 +87,6 @@ tlp
 tlp-rdw
 tp_smapi
 acpi_call
+
+#kubernetes
+kubectl

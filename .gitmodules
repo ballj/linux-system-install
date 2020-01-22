@@ -23,3 +23,13 @@
 	url = https://aur.archlinux.org/packages/asus-wmi-sensors-dkms-git/
 	branch = master
         ignore = dirty
+[submodule "aur/epson-inkjet-printer-escpr"]
+	path = aur/epson-inkjet-printer-escpr
+	url = https://aur.archlinux.org/epson-inkjet-printer-escpr.git
+	branch = master
+        ignore = dirty
+[submodule "aur/kubernetes-helm"]
+	path = aur/kubernetes-helm
+	url = https://aur.archlinux.org/kubernetes-helm.git
+	branch = master
+        ignore = dirty
