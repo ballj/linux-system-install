@@ -1,0 +1,40 @@
+{
+    "__comment": "following hotkey types are supported: nothing, typeout, shortcut and run; only en and si keyboard mappings are currently supported",
+    "keyboard_mapping": "si",
+    "g1": {
+        "hotkey_type": "shortcut",
+        "do": "win+1"
+    },
+    "g2": {
+        "hotkey_type": "shortcut",
+        "do": "win+2"
+    },
+    "g3": {
+        "hotkey_type": "shortcut",
+        "do": "win+3"
+    },
+    "g4": {
+        "hotkey_type": "shortcut",
+        "do": "win+4"
+    },
+    "g5": {
+        "hotkey_type": "shortcut",
+        "do": "win+5"
+    },
+    "g6": {
+        "hotkey_type": "shortcut",
+        "do": "win+6"
+    },
+    "g7": {
+        "hotkey_type": "shortcut",
+        "do": "win+7"
+    },
+    "g8": {
+        "hotkey_type": "shortcut",
+        "do": "win+8"
+    },
+    "g9": {
+        "hotkey_type": "run",
+        "do": "/usr/local/bin/monitor-input-set"
+    }
+}
