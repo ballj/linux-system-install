@@ -33,13 +33,18 @@ mkswap /dev/mapper/vg_arch-lv_swap
 
 mount /dev/mapper/vg_arch-lv_root /mnt
 mkdir /mnt/home
+mkdir /mnt/efi
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/efi
+mkdir -p /mnt/efi/EFI/arch
+mount --bind /mnt/efi/EFI/arch /mnt/boot
 mount /dev/mapper/vg_arch-lv_home /mnt/home
 swapon /dev/mapper/vg_arch-lv_swap
-mkdir /mnt/boot
-mount /dev/sda1 /mnt/boot
 
 pacstrap /mnt base base-devel
 genfstab -U /mnt >> /mnt/etc/fstab
+sed -i 's|/mnt||' /mnt/etc/fstab
+sed -i 's|/mnt/efi/EFI/arch.*|/efi/EFI/arch /boot none defaults,bind 0 0|' /mnt/etc/fstab
 arch-chroot /mnt
 ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 hwclock --systohc
